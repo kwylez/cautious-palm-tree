@@ -39,19 +39,26 @@ bonfire://condition?name=<name>&reading=<reading>&author=<author>
 
 Bonfire's `ConditionStore` parses this URL on receipt (via SwiftUI's `onOpenURL`) and surfaces the condition in the UI.
 
-## App Intents / Siri
+## App Intents / Siri / Shortcuts
 
-Neither app requires Shortcuts or Spotlight — the intents are invocable directly through Siri.
+Both apps expose intents through Siri and the Shortcuts app. `AppShortcutsProvider` makes the intents pre-available in Shortcuts without any user configuration — they appear as tiles immediately after install and can be added to automations.
 
 ### NorthStar — `CreateConditionIntent`
 
-> "Hey Siri, create a condition in NorthStar"
+Siri phrases:
+- "Create a condition in NorthStar"
+- "New condition in NorthStar"
+- "Add a condition in NorthStar"
+- "Send a condition to Bonfire with NorthStar"
 
 Siri collects name, reading, and author conversationally, then opens Bonfire with the new condition via the `bonfire://` deep link.
 
 ### Bonfire — `OpenConditionIntent`
 
-> "Hey Siri, open condition [name] in Bonfire"
+Siri phrases:
+- "Open a condition in Bonfire"
+- "Show a condition in Bonfire"
+- "View a condition in Bonfire"
 
 Siri collects the condition details and opens Bonfire directly to display them.
 
