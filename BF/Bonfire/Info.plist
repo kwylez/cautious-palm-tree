@@ -16,18 +16,14 @@
     <string>$(MARKETING_VERSION)</string>
     <key>CFBundleVersion</key>
     <string>$(CURRENT_PROJECT_VERSION)</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>bonfire</string>
-    </array>
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
             <key>CFBundleURLName</key>
-            <string>com.corywiles.NorthStar</string>
+            <string>com.corywiles.Bonfire</string>
             <key>CFBundleURLSchemes</key>
             <array>
-                <string>northstar</string>
+                <string>bonfire</string>
             </array>
         </dict>
     </array>
