@@ -6,6 +6,7 @@
 //
 
 import AppIntents
+import UIKit
 
 struct CreateConditionIntent: AppIntent {
 
@@ -50,7 +51,7 @@ struct CreateConditionIntent: AppIntent {
     @MainActor
     static func send(_ condition: Condition) async {
         guard let url = bonfireURL(for: condition) else { return }
-        UIApplication.shared.open(url)
+        await UIApplication.shared.open(url)
     }
 
     static func bonfireURL(for condition: Condition) -> URL? {
