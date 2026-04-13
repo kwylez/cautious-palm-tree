@@ -37,22 +37,32 @@ struct CreateConditionIntent: AppIntent {
     var author: String
 
     func perform() async throws -> some IntentResult & ProvidesDialog & OpensIntent {
+        guard let url = Self.bonfireURL(for: Condition(name: name, reading: reading, author: author)) else {
+            throw CreateConditionError.invalidURL
+        }
+        return .result(
+            opensIntent: OpenURLIntent(url), dialog: IntentDialog("Created '\(name)' by \(author). Opening Bonfire now.")
+        )
+    }
+
+    /// Programmatically sends a condition to Bonfire without going through Siri or Shortcuts.
+    /// Call this from anywhere in NorthStar to trigger the same deep link that the intent uses.
+    @MainActor
+    static func send(_ condition: Condition) async {
+        guard let url = bonfireURL(for: condition) else { return }
+        UIApplication.shared.open(url)
+    }
+
+    static func bonfireURL(for condition: Condition) -> URL? {
         var components = URLComponents()
         components.scheme = "bonfire"
         components.host = "condition"
         components.queryItems = [
-            URLQueryItem(name: "name", value: name),
-            URLQueryItem(name: "reading", value: reading),
-            URLQueryItem(name: "author", value: author)
+            URLQueryItem(name: "name", value: condition.name),
+            URLQueryItem(name: "reading", value: condition.reading),
+            URLQueryItem(name: "author", value: condition.author)
         ]
-
-        guard let url = components.url else {
-            throw CreateConditionError.invalidURL
-        }
-
-        return .result(
-            opensIntent: OpenURLIntent(url), dialog: IntentDialog("Created '\(name)' by \(author). Opening Bonfire now.")
-        )
+        return components.url
     }
 }
 
