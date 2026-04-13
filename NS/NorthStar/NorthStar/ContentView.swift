@@ -8,16 +8,25 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @State private var showingForm = false
+
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Text("NorthStar")
+            Button("Create Condition") {
+                showingForm = true
+            }
+            .buttonStyle(.borderedProminent)
         }
         .padding()
+        .sheet(isPresented: $showingForm) {
+            ConditionFormView()
+        }
         .onOpenURL { url in
-            // Handle incoming deep link from Bonfire
             print("Received deep link: \(url)")
         }
     }

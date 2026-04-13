@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    @Environment(ConditionStore.self) private var conditionStore
+
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             Image(systemName: "globe")
                 .imageScale(.large)
                 .foregroundStyle(.tint)
@@ -20,7 +23,23 @@ struct ContentView: View {
                 }
             }
             .buttonStyle(.borderedProminent)
-            .padding(.top)
+
+            if let condition = conditionStore.current {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(condition.name)
+                        .font(.headline)
+                    Text(condition.reading)
+                        .font(.body)
+                    Text("— \(condition.author)")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .background(.regularMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(.horizontal)
+            }
         }
         .padding()
     }
@@ -28,4 +47,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
+        .environment(ConditionStore())
 }
