@@ -51,8 +51,7 @@ struct CreateConditionIntent: AppIntent {
         }
 
         return .result(
-            dialog: IntentDialog("Created '\(name)' by \(author). Opening Bonfire now."),
-            opensIntent: OpenURLIntent(url)
+            opensIntent: OpenURLIntent(url), dialog: IntentDialog("Created '\(name)' by \(author). Opening Bonfire now.")
         )
     }
 }
