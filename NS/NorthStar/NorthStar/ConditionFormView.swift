@@ -38,17 +38,8 @@ struct ConditionFormView: View {
     }
 
     private func send() {
-        var components = URLComponents()
-        components.scheme = "bonfire"
-        components.host = "condition"
-        components.queryItems = [
-            URLQueryItem(name: "name", value: name),
-            URLQueryItem(name: "reading", value: reading),
-            URLQueryItem(name: "author", value: author)
-        ]
-        if let url = components.url {
-            UIApplication.shared.open(url)
-        }
+        let condition = Condition(name: name, reading: reading, author: author)
+        Task { await CreateConditionIntent.send(condition) }
         dismiss()
     }
 }
