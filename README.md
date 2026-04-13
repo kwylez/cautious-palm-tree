@@ -66,6 +66,17 @@ Siri collects the condition details and opens Bonfire directly to display them.
 
 Tapping **Create Condition** in NorthStar presents a SwiftUI `Form`. The **Send to Bonfire** button constructs the same `bonfire://condition` URL and opens Bonfire without involving Siri.
 
+### Programmatic use
+
+`CreateConditionIntent` exposes a `static func send(_ condition:)` method so any NorthStar code can trigger the same Bonfire deep link without going through Siri or Shortcuts:
+
+```swift
+let condition = Condition(name: "Flow", reading: "Be water.", author: "Bruce Lee")
+await CreateConditionIntent.send(condition)
+```
+
+The underlying URL is built by `static func bonfireURL(for:)`, which is the single source of truth used by `perform()`, `send(_:)`, and `ConditionFormView` alike.
+
 ## Requirements
 
 - Xcode 16+
